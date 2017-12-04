@@ -8,6 +8,7 @@ if (CMAKE_COMPILER_IS_GNUCC)
 endif()
 
 add_subdirectory(lib)
+add_subdirectory(examples)
 
 enable_testing()
 add_subdirectory(tests)

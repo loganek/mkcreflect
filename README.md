@@ -25,58 +25,13 @@ MKCREFLECT_DEFINE_STRUCT(get_info_function_name, StructName,
    * **C_TYPE** - type of the field (e.g. int, uint64, char, etc.)
    * **ARRAY_SIZE** - size of array, if a field is an array
 
-See example below for clarification.
+Also, see [examples](examples).
 
 ## Integration to your project
-Just copy a **lib/include/mkcreflect.h** to your project and include it to the file where you want to use it.
+Just copy a **lib/include/mkcreflect.h** file to your project and include it wherever you want to use it.
 
 ## Example
-```c
-#include <mkcreflect_test.h>
-#include <stdio.h>
-
-MKCREFLECT_DEFINE_STRUCT(get_test_struct_type_info, TestStruct,
-    (INTEGER, int, int_field),
-    (STRING, char, array_field, 20),
-    (INTEGER, size_t, size_field))
-
-int main(int argc, char** argv)
-{
-    MKCREFLECT_TypeInfo* info = get_test_struct_type_info();
-
-    for (size_t i = 0; i < info->fields_count; i++)
-    {
-        MKCREFLECT_FieldInfo* field = &info->fields[i];
-        printf(" * %s\n", field->field_name);
-        printf("    Type: %s\n", field->field_type);
-        printf("    Total size: %lu\n", field->size);
-        printf("    Offset: %lu\n", field->offset);
-        if (field->array_size != -1)
-        {
-            printf("    It is an array! Number of elements: %d, size of single element: %lu\n",
-                    field->array_size, field->size / field->array_size);
-        }
-    }
-
-    return 0;
-}
-```
-##### Output:
-```bash
-* int_field
-   Type: int
-   Total size: 4
-   Offset: 0
-* array_field
-   Type: char
-   Total size: 17
-   Offset: 4
-   It is an array! Number of elements: 17, size of single element: 1
-* size_field
-   Type: size_t
-   Total size: 8
-   Offset: 24
-```
+There are a few examples in [examples](examples) directory.
 
 ## License
 Distributed under the [Beerware license](LICENSE).
