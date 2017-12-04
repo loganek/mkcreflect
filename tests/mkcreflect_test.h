@@ -24,9 +24,9 @@
 #define ASSERT_EQ_(expected, actual, cmp, print_op) do { \
     if (!(cmp)) \
       { \
-	PRINT_ERR(" %s %d:\n %s\n * %s != %s\n   * Expected: " print_op	\
+	PRINT_ERR(" %s %d:\n   * %s != %s\n   * Expected: " print_op	\
           "\n   * Actual: " print_op "\n", __FILE__, __LINE__, \
-          __func__, #expected, #actual, expected, actual); \
+          #expected, #actual, expected, actual); \
     return 1; \
       } \
     PRINT_OK(" %s == %s\n", #expected, #actual); \
