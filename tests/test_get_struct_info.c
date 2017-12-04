@@ -21,6 +21,7 @@ static int assert_field(MKCREFLECT_FieldInfo* expected, MKCREFLECT_FieldInfo* ac
     ASSERT_STREQ(expected->field_type, actual->field_type);
     ASSERT_STREQ(expected->field_name, actual->field_name);
     ASSERT_UEQ(expected->size, actual->size);
+    ASSERT_UEQ(expected->offset, actual->offset);
     ASSERT_EQ(expected->array_size, actual->array_size);
     ASSERT_EQ(expected->data_type, actual->data_type);
 
@@ -36,10 +37,10 @@ static int test_get_struct_info(void)
 
     MKCREFLECT_FieldInfo fields_info[] =
     {
-        {"int", "field1", sizeof(int), -1, MKCREFLECT_TYPES_INTEGER},
-        {"int64_t", "field2", sizeof(int64_t[20]), 20, MKCREFLECT_TYPES_INTEGER},
-        {"char", "field3", sizeof(char[10]), 10, MKCREFLECT_TYPES_STRING},
-        {"BaseStruct", "field4", sizeof(BaseStruct), -1, MKCREFLECT_TYPES_STRUCT}
+        {"int", "field1", sizeof(int), offsetof(TestStruct, field1), -1, MKCREFLECT_TYPES_INTEGER},
+        {"int64_t", "field2", sizeof(int64_t[20]), offsetof(TestStruct, field2), 20, MKCREFLECT_TYPES_INTEGER},
+        {"char", "field3", sizeof(char[10]), offsetof(TestStruct, field3), 10, MKCREFLECT_TYPES_STRING},
+        {"BaseStruct", "field4", sizeof(BaseStruct), offsetof(TestStruct, field4), -1, MKCREFLECT_TYPES_STRUCT}
     };
 
     for (size_t i = 0; i < info->fields_count; i++)

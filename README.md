@@ -47,10 +47,14 @@ int main(int argc, char** argv)
     for (size_t i = 0; i < info->fields_count; i++)
     {
         MKCREFLECT_FieldInfo* field = &info->fields[i];
-        printf(" * %s: %s (total size: %lu)\n", field->field_name, field->field_type, field->size);
+        printf(" * %s\n", field->field_name);
+        printf("    Type: %s\n", field->field_type);
+        printf("    Total size: %lu\n", field->size);
+        printf("    Offset: %lu\n", field->offset);
         if (field->array_size != -1)
         {
-            printf("   (is array, number of elements: %d)\n", field->array_size);
+            printf("    It is an array! Number of elements: %d, size of single element: %lu\n",
+                    field->array_size, field->size / field->array_size);
         }
     }
 
@@ -59,10 +63,19 @@ int main(int argc, char** argv)
 ```
 ##### Output:
 ```bash
- * int_field: int (total size: 4)
- * array_field: char (total size: 20)
-   (is array, number of elements: 20)
- * size_field: size_t (total size: 8)
+* int_field
+   Type: int
+   Total size: 4
+   Offset: 0
+* array_field
+   Type: char
+   Total size: 17
+   Offset: 4
+   It is an array! Number of elements: 17, size of single element: 1
+* size_field
+   Type: size_t
+   Total size: 8
+   Offset: 24
 ```
 
 ## License
