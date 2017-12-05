@@ -85,20 +85,20 @@ static void load_user_data(void* value, int indent)
 
         switch (field_info->data_type)
         {
-        case MKCREFLECT_TYPES_UNSIGNED_INTEGER:
-        {
-            unsigned long long int data;
-            scanf("%llu", &data);
-            SET_INTEGER_VALUE(u)
-            break;
-        }
         case MKCREFLECT_TYPES_INTEGER:
-        {
-            long long int data;
-            scanf("%lli", &data);
-            SET_INTEGER_VALUE()
+            if (field_info->is_signed)
+            {
+                long long int data;
+                scanf("%lli", &data);
+                SET_INTEGER_VALUE()
+            }
+            else
+            {
+                unsigned long long int data;
+                scanf("%llu", &data);
+                SET_INTEGER_VALUE(u)
+            }
             break;
-        }
         case MKCREFLECT_TYPES_STRING:
         {
             char* data = (char*)malloc(field_info->size);
@@ -130,20 +130,20 @@ static void print_user_data(void* value, int indent)
 
         switch (field_info->data_type)
         {
-        case MKCREFLECT_TYPES_UNSIGNED_INTEGER:
-        {
-            unsigned long long int data;
-            GET_INTEGER_VALUE(u)
-            printf("%llu", data);
-            break;
-        }
         case MKCREFLECT_TYPES_INTEGER:
-        {
-            long long int data;
-            GET_INTEGER_VALUE()
-            printf("%lli", data);
+            if (field_info->is_signed)
+            {
+                long long int data;
+                GET_INTEGER_VALUE()
+                printf("%lli", data);
+            }
+            else
+            {
+                unsigned long long int data;
+                GET_INTEGER_VALUE(u)
+                printf("%llu", data);
+            }
             break;
-        }
         case MKCREFLECT_TYPES_STRING:
         {
             char* data = (char*)malloc(field_info->size);
@@ -163,11 +163,11 @@ static void print_user_data(void* value, int indent)
 
 DEFINE_STRUCT(Address,
               (STRING, char, street, 20),
-              (UNSIGNED_INTEGER, unsigned int, house_number))
+              (INTEGER, unsigned int, house_number))
 
 DEFINE_STRUCT(PersonalInfo,
               (STRING, char, name, 20),
-              (UNSIGNED_INTEGER, unsigned char, age),
+              (INTEGER, unsigned char, age),
               (STRUCT, Address, address))
 
 int main(void)
