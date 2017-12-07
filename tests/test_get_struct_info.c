@@ -10,7 +10,7 @@ typedef struct
   int p2;
 } BaseStruct;
 
-MKCREFLECT_DEFINE_STRUCT(get_test_struct_type_info, TestStruct,
+MKCREFLECT_DEFINE_STRUCT(TestStruct,
     (INTEGER, unsigned int, field1),
     (INTEGER, int64_t, field2, 20),
     (STRING, char, field3, 10),
@@ -31,7 +31,7 @@ static int assert_field(MKCREFLECT_FieldInfo* expected, MKCREFLECT_FieldInfo* ac
 
 static int test_get_struct_info(void)
 {
-    MKCREFLECT_TypeInfo* info = get_test_struct_type_info();
+    MKCREFLECT_TypeInfo* info = mkcreflect_get_TestStruct_type_info();
 
     ASSERT_UEQ(4lu, info->fields_count);
     ASSERT_STREQ("TestStruct", info->name);

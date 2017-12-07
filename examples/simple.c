@@ -9,7 +9,7 @@
 #include <mkcreflect.h>
 #include <stdio.h>
 
-MKCREFLECT_DEFINE_STRUCT(get_test_struct_type_info, TestStruct,
+MKCREFLECT_DEFINE_STRUCT(TestStruct,
     (INTEGER, int, int_field),
     (STRING, char, array_field, 20),
     (INTEGER, size_t, size_field))
@@ -18,7 +18,7 @@ int main(int argc, char** argv)
 {
     (void)argc;
     (void)argv;
-    MKCREFLECT_TypeInfo* info = get_test_struct_type_info();
+    MKCREFLECT_TypeInfo* info = mkcreflect_get_TestStruct_type_info();
 
     for (size_t i = 0; i < info->fields_count; i++)
     {

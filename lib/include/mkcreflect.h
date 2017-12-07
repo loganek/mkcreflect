@@ -114,12 +114,12 @@ typedef struct
 #define MKCREFLECT_FIELD_INFO(X, USER_DATA) \
     MKCREFLECT_FIELD_INFO_(USER_DATA, MKCREFLECT_EXPAND_VA_ X)
 
-#define MKCREFLECT_DEFINE_STRUCT(GET_TYPE_FNC_NAME, TYPE_NAME, ...) \
+#define MKCREFLECT_DEFINE_STRUCT(TYPE_NAME, ...) \
     typedef struct \
     { \
         MKCREFLECT_FOREACH(MKCREFLECT_DECLARE_FIELD, 0, __VA_ARGS__) \
     } TYPE_NAME; \
-    static MKCREFLECT_TypeInfo* GET_TYPE_FNC_NAME(void) \
+    static MKCREFLECT_TypeInfo* mkcreflect_get_##TYPE_NAME##_type_info(void) \
     { \
         static MKCREFLECT_FieldInfo fields_info[MKCREFLECT_FOREACH(MKCREFLECT_SUM, 0, __VA_ARGS__)] = \
         { \

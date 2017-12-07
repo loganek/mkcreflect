@@ -13,11 +13,10 @@ This library allows you to inspect your data structures at runtime:
 ## Documentation
 There's only one public macro which you should use:
 ```c
-MKCREFLECT_DEFINE_STRUCT(get_info_function_name, StructName,
+MKCREFLECT_DEFINE_STRUCT(StructName,
     (DATA_TYPE, FIELD1_NAME, C_TYPE1[, ARRAY_SIZE_1])[,
     (DATA_TYPE, FIELD2_NAME, C_TYPE2[, ARRAY_SIZE_2])[, ...])
 ```
- * **get_info_function_name** - function name which returns information about your structure.
  * **StructName** - name of your structure
  * **(DATA_TYPE, FIELD1_NAME, C_TYPE1[, ARRAY_SIZE_1])** - comma-separated list of fields in the structure
    * **DATA_TYPE** - type of field (INTEGER, STRING or STRUCT)

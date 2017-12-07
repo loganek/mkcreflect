@@ -21,9 +21,9 @@ typedef struct
 #define TO_BASE(var) ((Base*)(var))
 
 #define DEFINE_STRUCT(TypeName, ...) \
-    MKCREFLECT_DEFINE_STRUCT(get_##TypeName##_type_info, TypeName, (STRUCT, Base, base), __VA_ARGS__)
+    MKCREFLECT_DEFINE_STRUCT(TypeName, (STRUCT, Base, base), __VA_ARGS__)
 
-#define INIT_VALUE(TypeName, var_name) TO_BASE(var_name)->info = get_##TypeName##_type_info()
+#define INIT_VALUE(TypeName, var_name) TO_BASE(var_name)->info = mkcreflect_get_##TypeName##_type_info();
 
 static void set_value(Base* variable, MKCREFLECT_FieldInfo* field_info, void* value)
 {
