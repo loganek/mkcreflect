@@ -39,6 +39,9 @@ static int test_get_struct_info(void)
     ASSERT_UEQ(7lu, info->fields_count);
     ASSERT_STREQ("TestStruct", info->name);
     ASSERT_UEQ(sizeof(TestStruct), info->size);
+    size_t packed_size = sizeof(unsigned int) + sizeof(int64_t) + sizeof(char) +
+            sizeof(BaseStruct) + sizeof(float) + sizeof(double) + sizeof(void*);
+    ASSERT_UEQ(packed_size, info->packed_size);
 
     MKCREFLECT_FieldInfo fields_info[] =
     {
