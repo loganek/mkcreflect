@@ -38,6 +38,7 @@ static int test_get_struct_info(void)
 
     ASSERT_UEQ(7lu, info->fields_count);
     ASSERT_STREQ("TestStruct", info->name);
+    ASSERT_UEQ(sizeof(TestStruct), info->size);
 
     MKCREFLECT_FieldInfo fields_info[] =
     {

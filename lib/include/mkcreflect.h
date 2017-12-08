@@ -40,6 +40,7 @@ typedef struct
 {
     const char* name;
     size_t fields_count;
+    size_t size;
     MKCREFLECT_FieldInfo* fields;
 } MKCREFLECT_TypeInfo;
 
@@ -136,6 +137,7 @@ typedef struct
         { \
             #TYPE_NAME, \
             MKCREFLECT_FOREACH(MKCREFLECT_SUM, 0, __VA_ARGS__), \
+            sizeof(TYPE_NAME), \
             fields_info \
         }; \
         return &type_info; \
