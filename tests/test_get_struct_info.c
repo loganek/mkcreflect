@@ -14,7 +14,10 @@ MKCREFLECT_DEFINE_STRUCT(TestStruct,
     (INTEGER, unsigned int, field1),
     (INTEGER, int64_t, field2, 20),
     (STRING, char, field3, 10),
-    (STRUCT, BaseStruct, field4))
+    (STRUCT, BaseStruct, field4),
+    (FLOAT, float, field5),
+    (DOUBLE, double, field6),
+    (POINTER, void*, field7, 3))
 
 static int assert_field(MKCREFLECT_FieldInfo* expected, MKCREFLECT_FieldInfo* actual)
 {
@@ -33,7 +36,7 @@ static int test_get_struct_info(void)
 {
     MKCREFLECT_TypeInfo* info = mkcreflect_get_TestStruct_type_info();
 
-    ASSERT_UEQ(4lu, info->fields_count);
+    ASSERT_UEQ(7lu, info->fields_count);
     ASSERT_STREQ("TestStruct", info->name);
 
     MKCREFLECT_FieldInfo fields_info[] =
@@ -41,7 +44,10 @@ static int test_get_struct_info(void)
         {"unsigned int", "field1", sizeof(unsigned int), offsetof(TestStruct, field1), 0, -1, MKCREFLECT_TYPES_INTEGER},
         {"int64_t", "field2", sizeof(int64_t[20]), offsetof(TestStruct, field2), 1, 20, MKCREFLECT_TYPES_INTEGER},
         {"char", "field3", sizeof(char[10]), offsetof(TestStruct, field3), 1, 10, MKCREFLECT_TYPES_STRING},
-        {"BaseStruct", "field4", sizeof(BaseStruct), offsetof(TestStruct, field4), 0, -1, MKCREFLECT_TYPES_STRUCT}
+        {"BaseStruct", "field4", sizeof(BaseStruct), offsetof(TestStruct, field4), 0, -1, MKCREFLECT_TYPES_STRUCT},
+        {"float", "field5", sizeof(float), offsetof(TestStruct, field5), 1, -1, MKCREFLECT_TYPES_FLOAT},
+        {"double", "field6", sizeof(double), offsetof(TestStruct, field6), 1, -1, MKCREFLECT_TYPES_DOUBLE},
+        {"void*", "field7", sizeof(void*[3]), offsetof(TestStruct, field7), 0, 3, MKCREFLECT_TYPES_POINTER}
     };
 
     for (size_t i = 0; i < info->fields_count; i++)

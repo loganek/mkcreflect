@@ -70,6 +70,11 @@ static void get_value(Base* variable, MKCREFLECT_FieldInfo* field_info, void* ou
         printf("Unsupported size\n"); \
     }
 
+static void unknown_type_error(Base* base)
+{
+    printf("I don't know how to handle the %s type", base->info->name);
+}
+
 static void load_user_data(void* value, int indent)
 {
     Base* entity = TO_BASE(value);
@@ -110,6 +115,9 @@ static void load_user_data(void* value, int indent)
         case MKCREFLECT_TYPES_STRUCT:
             printf("\n");
             load_user_data(TO_BASE((char*)entity + field_info->offset), indent + 2);
+            break;
+        default:
+            unknown_type_error(TO_BASE((char*)entity + field_info->offset));
             break;
         }
     }
@@ -156,6 +164,8 @@ static void print_user_data(void* value, int indent)
             printf("\n");
             print_user_data(TO_BASE((char*)entity + field_info->offset), indent + 2);
             break;
+        default:
+            unknown_type_error(TO_BASE((char*)entity + field_info->offset));
         }
         printf("\n");
     }
