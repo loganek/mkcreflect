@@ -5,6 +5,7 @@
  * you can do whatever you want with this stuff. If we meet some day, and you
  * think this stuff is worth it, you can buy me a beer in return. Marcin Kolny
  * ----------------------------------------------------------------------------
+ * http://github.com/loganek/mkcreflect
  */
 #include <mkcreflect.h>
 
@@ -20,10 +21,35 @@ typedef struct
 
 #define TO_BASE(var) ((Base*)(var))
 
-#define DEFINE_STRUCT(TypeName, ...) \
-    MKCREFLECT_DEFINE_STRUCT(TypeName, (STRUCT, Base, base), __VA_ARGS__)
+#define GENERATE_INIT_FOR_STRING(...)
+#define GENERATE_INIT_FOR_INTEGER(...)
+#define GENERATE_INIT_FOR_FLOAT(...)
+#define GENERATE_INIT_FOR_DOUBLE(...)
+#define GENERATE_INIT_FOR_POINTER(...)
+#define GENERATE_INIT_FOR_STRUCT(TYPE_NAME, FIELD_NAME) initialize_##TYPE_NAME##_type(&obj->FIELD_NAME);
 
-#define INIT_VALUE(TypeName, var_name) TO_BASE(var_name)->info = mkcreflect_get_##TypeName##_type_info();
+#define GENERATE_INIT_BASE_ARRAY(IGNORE, DATA_TYPE, C_TYPE, FIELD_NAME, ...) GENERATE_INIT_FOR_##DATA_TYPE(C_TYPE, FIELD_NAME)
+#define GENERATE_INIT_BASE_TYPE(IGNORE, DATA_TYPE, C_TYPE, FIELD_NAME) GENERATE_INIT_FOR_##DATA_TYPE(C_TYPE, FIELD_NAME)
+
+#define GENERATE_INIT_(...) \
+    MKCREFLECT_EXPAND_(MKCREFLECT_OVERRIDE_5( \
+        __VA_ARGS__, \
+        GENERATE_INIT_BASE_ARRAY, \
+        GENERATE_INIT_BASE_TYPE, \
+        MKCREFLECT_OVERRIDE_5_PLACEHOLDER)(__VA_ARGS__)) \
+
+#define GENERATE_INIT(X, USER_DATA) GENERATE_INIT_(USER_DATA, MKCREFLECT_EXPAND_VA_ X)
+
+#define GENERATE_INIT_METHOD(TypeName, ...) \
+    static void initialize_##TypeName##_type(TypeName* obj) \
+    { \
+        obj->base.info = mkcreflect_get_##TypeName##_type_info(); \
+        MKCREFLECT_FOREACH(GENERATE_INIT, TypeName, __VA_ARGS__) \
+    }
+
+#define DEFINE_STRUCT(TypeName, ...) \
+    MKCREFLECT_DEFINE_STRUCT(TypeName, (STRUCT, Base, base), __VA_ARGS__) \
+    GENERATE_INIT_METHOD(TypeName, __VA_ARGS__)
 
 static void set_value(Base* variable, MKCREFLECT_FieldInfo* field_info, void* value)
 {
@@ -183,8 +209,7 @@ DEFINE_STRUCT(PersonalInfo,
 int main(void)
 {
     PersonalInfo my_info;
-    INIT_VALUE(PersonalInfo, &my_info);
-    INIT_VALUE(Address, &my_info.address);
+    initialize_PersonalInfo_type(&my_info);
 
     load_user_data(&my_info, 0);
 
