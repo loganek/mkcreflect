@@ -7,6 +7,8 @@
  * ----------------------------------------------------------------------------
  * http://github.com/loganek/mkcreflect
  */
+
+#define MKCREFLECT_IMPL
 #include <mkcreflect.h>
 
 #include <inttypes.h>

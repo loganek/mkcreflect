@@ -1,3 +1,4 @@
+#define MKCREFLECT_IMPL
 #include <mkcreflect.h>
 
 #include "mkcreflect_test.h"

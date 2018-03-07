@@ -7,13 +7,8 @@
  * ----------------------------------------------------------------------------
  * http://github.com/loganek/mkcreflect
  */
-#include <mkcreflect.h>
+#include "test_struct.h"
 #include <stdio.h>
-
-MKCREFLECT_DEFINE_STRUCT(TestStruct,
-    (INTEGER, int, int_field),
-    (STRING, char, array_field, 20),
-    (INTEGER, size_t, size_field))
 
 int main(int argc, char** argv)
 {
