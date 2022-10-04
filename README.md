@@ -1,5 +1,5 @@
 # mkcreflect
-[![Build Status](https://travis-ci.org/loganek/mkcreflect.svg?branch=master)](https://travis-ci.org/loganek/mkcreflect) [![Build status](https://ci.appveyor.com/api/projects/status/aqeb89t5sbf7uxsv?svg=true)](https://ci.appveyor.com/project/loganek/mkcreflect)
+[![Build Status](https://github.com/loganek/mkcreflect/actions/workflows/build_on_linux_windows.yml/badge.svg?event=push)
 
 A reflection library for C
 
